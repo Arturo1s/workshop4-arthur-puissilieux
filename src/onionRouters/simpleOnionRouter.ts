@@ -71,8 +71,8 @@ export async function simpleOnionRouter(nodeId: number) {
       if (!privateKeyObject) {
         return res.status(500).json({ error: "Private key not initialized" });
       }
-      // For 2048-bit RSA, the encrypted key is typically ~344 base64 chars
-      // We'll slice that portion, then the remainder is the sym-encrypted data
+      
+      // We'll sliced that portion, then the remainder is the sym encrypted data
       const possibleKeyLength = 344;
       const rsaEncryptedKeyB64 = message.slice(0, possibleKeyLength);
       const symEncryptedData = message.slice(possibleKeyLength);
@@ -100,7 +100,7 @@ export async function simpleOnionRouter(nodeId: number) {
         body: JSON.stringify({ message: remainder }),
       });
 
-      // We don't know if the test wants "success" from the node, but let's stay consistent
+      
       return res.json({ status: "ok" });
     } catch (error) {
       console.error(`Node ${nodeId} failed to process /message:`, error);
